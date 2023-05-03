@@ -42,15 +42,51 @@ export class AudioController {
     };
 
     // @ts-ignore
-    return Chords[chord as keyof Object];
+    return Chords[chord as keyof Object] as string[];
   };
 
   playNote = (note: Note) => {
     return new Promise<void>(async (res) => {
-      const sound = new Audio(note);
+      const sound = new Audio(this.getNoteAudioFile(note));
+      console.log(note);
+
       sound.playbackRate = 2;
       sound.play();
       sound.onended = () => res();
     });
+  };
+
+  playNotesInChord = (chord: string) => {
+    const notes = this.getNotesByChord(chord);
+    return Promise.all(
+      notes.map(async (note: string) => {
+        await this.playNote(note as Note);
+      }),
+    );
+  };
+
+  playChords = (chords: string[]) => {
+    return Promise.all(
+      chords.map(async (chord) => {
+        await this.playNotesInChord(chord);
+      }),
+    );
+  };
+
+  playMelody = async (chord: string) => {
+    const notes = this.getNotesByChord(chord);
+    await this.playNote(notes[0] as Note);
+    await this.playNote(notes[1] as Note);
+    await this.playNote(notes[2] as Note);
+  };
+
+  startMelody = async (chords: string[]) => {
+    setTimeout(() => {
+      this.playMelody(chords[3]);
+    }, 1000);
+    await this.playNotesInChord(chords[0]);
+    await this.playNotesInChord(chords[1]);
+    await this.playNotesInChord(chords[2]);
+    await this.playNotesInChord(chords[3]);
   };
 }

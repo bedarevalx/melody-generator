@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 
-const ChordSelect = () => {
+interface IChordSelectProps {
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const ChordSelect = (props: IChordSelectProps) => {
   const [chord, setChord] = useState('Cmaj');
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setChord(e.target.value);
+    props.onChange && props.onChange(e);
   };
   return (
     <select onChange={handleChange} value={chord} className='chord-select'>
