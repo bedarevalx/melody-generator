@@ -17,3 +17,16 @@ it('Select changes the text after selecting a note', () => {
   userEvent.selectOptions(selectChordAndShowSelectedChord, 'Fmaj');
   expect(selectChordAndShowSelectedChord).toHaveValue('Fmaj');
 });
+
+it('Page rendered 4 select with chords option correctly', () => {
+  render(<App />);
+  const cmajRenderedCorrectly = screen.getAllByText(/cmaj/i).length;
+  const fmajRenderedCorrectly = screen.getAllByText(/fmaj/i).length;
+  const aminRenderedCorrectly = screen.getAllByText(/amin/i).length;
+  const gmajRenderedCorrectly = screen.getAllByText(/gmaj/i).length;
+
+  expect(cmajRenderedCorrectly).toBe(4);
+  expect(fmajRenderedCorrectly).toBe(4);
+  expect(aminRenderedCorrectly).toBe(4);
+  expect(gmajRenderedCorrectly).toBe(4);
+});
