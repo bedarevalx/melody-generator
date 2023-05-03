@@ -35,3 +35,15 @@ it('Must return notes that consists in chord', () => {
   expect(cmajNotes).toStrictEqual(['C', 'E', 'G']);
   expect(fmajNotes).toStrictEqual(['F', 'A', 'C']);
 });
+
+it('Func must return notes by chord in select', () => {
+  const { queryByLabelText, getByLabelText } = render(<ChordSelect />);
+  const controller = new AudioController();
+  const selectChordAndShowSelectedChord = screen.getByRole('combobox');
+  userEvent.selectOptions(selectChordAndShowSelectedChord, 'Fmaj');
+  expect(selectChordAndShowSelectedChord).toHaveValue('Fmaj');
+  const notes = controller.getNotesByChord(
+    (selectChordAndShowSelectedChord as HTMLSelectElement).value,
+  );
+  expect(notes).toStrictEqual(['F', 'A', 'C']);
+});
