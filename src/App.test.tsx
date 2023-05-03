@@ -28,6 +28,10 @@ it('Page rendered 4 select with chords option correctly', () => {
 
 it('Must return notes that consists in chord', () => {
   const controller = new AudioController();
-  const notes = controller.getNotesByChord('Cmaj');
-  expect(notes.length).toBe(3);
+  const cmajNotes = controller.getNotesByChord('Cmaj');
+  const fmajNotes = controller.getNotesByChord('Fmaj');
+
+  expect(cmajNotes.length).toBe(3);
+  expect(cmajNotes).toStrictEqual(['C', 'E', 'G']);
+  expect(fmajNotes).toStrictEqual(['F', 'A', 'C']);
 });
