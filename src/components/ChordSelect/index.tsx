@@ -7,7 +7,7 @@ const ChordSelect = () => {
     setChord(e.target.value);
   };
   return (
-    <select onChange={handleChange} value={chord}>
+    <select onChange={handleChange} value={chord} className='chord-select'>
       <option value={'Cmaj'}>Cmaj</option>
       <option value={'Fmaj'}>Fmaj</option>
       <option value={'Amin'}>Amin</option>
